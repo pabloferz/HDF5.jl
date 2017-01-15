@@ -9,8 +9,8 @@ f = h5open(fn, "w")
 f["Float64"] = 3.2
 f["Int16"] = @compat Int16(4)
 # compression of empty array (issue #246)
-f["compressedempty", "shuffle", (), "compress", 4] = Array(Int64, 0)
-f["bloscempty", "blosc", 4] = Array(Int64, 0)
+f["compressedempty", "shuffle", (), "compress", 4] = Vector{Int64}(0)
+f["bloscempty", "blosc", 4] = Vector{Int64}(0)
 # Create arrays of different types
 A = randn(3,5)
 write(f, "Afloat64", convert(Matrix{Float64}, A))
@@ -45,7 +45,7 @@ write(f, "salut_split", salut_split)
 vlen = HDF5Vlen(salut_split)
 d_write(f, "salut_vlen", vlen)
 # Empty arrays
-empty = Array(UInt32, 0)
+empty = Vector{UInt32}(0)
 write(f, "empty", empty)
 # Empty strings
 empty_string = ""
